@@ -1,27 +1,7 @@
-Bean 정의하기
-@Bean : 클래스의 객체를 생성해서 Bean(스프링이 관리하는 객체)으로 등록함.
+BoardProject12
 
-
-@Component : 개발자가 작성한 클래스의 객체를 생성해서 Bean으로 등록함.
-
-
-@Controller : Component의 한 종류. 사용자의 요청(request - url pattern)에 따라서 
-			  자동으로 호출되는 메소드를 가지고 있는 클래스를 Bean으로 등록함.
-
-
-@RestController : @Controller와 유사하고 return값으로 지정된 값을 client에게 response로 보냄. 
-				  Restful API Server를 구성하는 경우에 주로 사용함.
-				  
-				  
-@ControllerAdvice : 예외가 발생한 경우 사용할 Global Exception Handler로
-					사용할 클래스를 Bean으로 등록함.
-					
-
-@Service : Controller에서 호출하는 메소드가 정의된 Bean을 등록함.
-		   @Component로 등록한 Bean과 비슷함.
-		   
-		   
-@Repository : Service에서 호출하는 메소드가 정의된 Bean을 등록함.
-			  이 Bean은 Database와 관련된 작업이 구현되어 있음.
-			  
-	Controller -> Service -> Repository
+	기타설정 및 마무리
+	게시판 관련 페이지 번호 설정
+	메인 페이지 구성 확인
+	
+	

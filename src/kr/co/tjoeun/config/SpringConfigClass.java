@@ -1,6 +1,8 @@
 package kr.co.tjoeun.config;
 
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -55,42 +57,41 @@ public class SpringConfigClass implements WebApplicationInitializer{
 */
 
 //SpringConfigClass: web.xml 역할을 하는 클래스
-public class SpringConfigClass extends AbstractAnnotationConfigDispatcherServletInitializer{
+public class SpringConfigClass extends AbstractAnnotationConfigDispatcherServletInitializer {
 	// DispatcherServlet 에 Mapping할 요청 주소 설정
 	@Override
-	protected String[] getServletMappings() {	
-		return new String[] {"/"};
+	protected String[] getServletMappings() {
+		return new String[] { "/" };
 	}
-	
+
 	// Spring MVC project 설정을 위한 클래스 지정하기
 	@Override
-	protected Class<?>[] getServletConfigClasses() {	
-		return new Class[] {ServletAppContext.class};
+	protected Class<?>[] getServletConfigClasses() {
+		return new Class[] { ServletAppContext.class };
 	}
-	
+
 	// project 에서 사용하는 Beans 들을 정의하기 위한 클래스 지정하기
 	@Override
-	protected Class<?>[] getRootConfigClasses() {	
-		return new Class[] {RootAppContext.class};
+	protected Class<?>[] getRootConfigClasses() {
+		return new Class[] { RootAppContext.class };
 	}
-	
+
 	// Parameter Encoding Filter 설정하기 : 한글처리
 	@Override
 	protected Filter[] getServletFilters() {
 		CharacterEncodingFilter encodinFilter = new CharacterEncodingFilter();
 		encodinFilter.setEncoding("UTF-8");
-		return new Filter[] {encodinFilter};
+		return new Filter[] { encodinFilter };
+	}
+
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+		super.customizeRegistration(registration);
+		MultipartConfigElement config1 = new MultipartConfigElement(null, 52428800, 524288000, 0);
+		
+		registration.setMultipartConfig(config1);
 	}
 	
+	
+
 }
-
-
-
-
-
-
-
-
-
-
-

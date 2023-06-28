@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import kr.co.tjoeun.bean.BoardInfoBean;
+import kr.co.tjoeun.bean.UserBean;
 import kr.co.tjoeun.service.TopMenuService;
 
 public class TopMenuInterceptor implements HandlerInterceptor {
@@ -20,15 +21,18 @@ public class TopMenuInterceptor implements HandlerInterceptor {
 	
 	@Autowired
 	private TopMenuService topMenuService;
+	private UserBean loginUserBean;
 	
-	public TopMenuInterceptor(TopMenuService topMenuService) {
+	public TopMenuInterceptor(TopMenuService topMenuService, UserBean loginUserBean) {
 		this.topMenuService = topMenuService;
+		this.loginUserBean = loginUserBean;
 	}
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 		List<BoardInfoBean> topMenuList = topMenuService.getTopMenuList();
 		request.setAttribute("topMenuList", topMenuList);
+		request.setAttribute("loginUserBean", loginUserBean);
 		
 		return true;
 	}
