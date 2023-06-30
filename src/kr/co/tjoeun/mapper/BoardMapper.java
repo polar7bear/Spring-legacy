@@ -41,7 +41,15 @@ public interface BoardMapper {
 	void deleteContentInfo(int content_idx);
 	
 	// 게시글 전체 개수 가져오기
-	@Select("select count(*) from content_table where content_board_idx = #{content_board_idx}")
+	@Select("SELECT count(*) from content_table WHERE content_board_idx = #{content_board_idx}")
 	int getContentCnt(int content_board_idx);
+	
+	// 메인화면 게시판별 게시글 미리보기 조회쿼리
+	@Select("SELECT content_idx, content_subject, content_date "
+			+ "FROM (SELECT content_idx, content_subject, content_date from content_table "
+			+ "WHERE content_board_idx = #{content_board_idx} order by content_date desc) "
+			+ "WHERE rownum between 1 and 5")
+	ArrayList<ContentBean> getContentPreview(int content_board_idx);
+	
 
 }

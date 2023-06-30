@@ -49,5 +49,10 @@ public class BoardDAO {
 	public int getContentCnt(int content_board_idx) {
 		return boardMapper.getContentCnt(content_board_idx);
 	}
+	
+	// 메인화면 게시판별 게시글 미리보기 조회
+	public ArrayList<ContentBean> getContentPreview(int content_board_idx) {
+		return boardMapper.getContentPreview(content_board_idx);
+	}
 
 }

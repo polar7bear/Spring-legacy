@@ -62,19 +62,22 @@ public class BoardController {
 	}
 
 	@GetMapping("/write")
-	public String write(@ModelAttribute("writeContentBean") ContentBean writeContentBean, @RequestParam("board_info_idx") int board_info_idx) {
+	public String write(@ModelAttribute("writeContentBean") ContentBean writeContentBean, @RequestParam("board_info_idx") int board_info_idx, @RequestParam("page") int page, Model model) {
 		writeContentBean.setContent_board_idx(board_info_idx);
+		model.addAttribute("page", page);
+		
 		return "board/write";
 	}
 
 	@PostMapping("/write_pro")
-	public String writePro(@Valid @ModelAttribute("writeContentBean") ContentBean writeContentBean,
-			BindingResult result) {
+	public String writePro(@Valid @ModelAttribute("writeContentBean") ContentBean writeContentBean, BindingResult result, @RequestParam("page") int page, Model model) {
+		model.addAttribute("page", page);		
+		
 		if (result.hasErrors()) {
 			return "board/write";
 		}
 		boardService.addContentInfo(writeContentBean);
-
+		
 		return "board/write_success";
 	}
 
@@ -85,42 +88,35 @@ public class BoardController {
 	}
 
 	@GetMapping("/modify")
-	public String modify(@ModelAttribute("modifyContentBean") ContentBean modifyContentBean, @RequestParam("board_info_idx") int board_info_idx, @RequestParam("content_idx") int content_idx, @RequestParam("page") int page, Model model) {
-		
+	public String boradModify(@RequestParam("board_info_idx") int board_info_idx,
+			@RequestParam("content_idx") int content_idx, @RequestParam("page") int page, Model model,
+			@ModelAttribute("modifyContentBean") ContentBean modifyContentBean) {
+
 		model.addAttribute("board_info_idx", board_info_idx);
 		model.addAttribute("content_idx", content_idx);
-		
-		modifyContentBean = boardService.getContentInfo(content_idx);
+		model.addAttribute("page", page);
+
+		ContentBean tmpContentBean = boardService.getContentInfo(content_idx);
+
+		modifyContentBean.setContent_writer_name(tmpContentBean.getContent_writer_name());
+		modifyContentBean.setContent_date(tmpContentBean.getContent_date());
+		modifyContentBean.setContent_subject(tmpContentBean.getContent_subject());
+		modifyContentBean.setContent_text(tmpContentBean.getContent_text());
+		modifyContentBean.setContent_file(tmpContentBean.getContent_file());
+		modifyContentBean.setContent_writer_idx(tmpContentBean.getContent_writer_idx());
 		modifyContentBean.setContent_board_idx(board_info_idx);
 		modifyContentBean.setContent_idx(content_idx);
-		model.addAttribute("modifyContentBean", modifyContentBean);
-		model.addAttribute("page", page);
-		/*
-		 * ContentBean tmpContentBean = boardService.getContentInfo(content_idx);
-		 * modifyContentBean.setContent_writer_name(tmpContentBean.
-		 * getContent_writer_name());
-		 * modifyContentBean.setContent_date(tmpContentBean.getContent_date());
-		 * modifyContentBean.setContent_subject(tmpContentBean.getContent_subject());
-		 * modifyContentBean.setContent_text(tmpContentBean.getContent_text());
-		 * modifyContentBean.setContent_file(tmpContentBean.getContent_file());
-		 * modifyContentBean.setContent_writer_idx(tmpContentBean.getContent_writer_idx(
-		 * ));
-		 * modifyContentBean.setContent_board_idx(board_info_idx)
-		 * ; modifyContentBean.setContent_idx(content_idx);
-		 */
-		
-		
-		
+
 		return "board/modify";
 	}
 	
 	@PostMapping("/modify_pro")
-	public String modifyPro(@Valid @ModelAttribute("modifyContentBean") ContentBean modifyContentBean, @RequestParam("page") int page, BindingResult result, Model model) {
+	public String modifyPro(@Valid @ModelAttribute("modifyContentBean") ContentBean modifyContentBean, BindingResult result, @RequestParam("page") int page, Model model) {
+		model.addAttribute("page", page);
 		if(result.hasErrors()) {
 			return "board/modify";
 		}
 		boardService.modifyContentInfo(modifyContentBean);
-		model.addAttribute("page", page);
 		return "board/modify_success";
 	}
 	

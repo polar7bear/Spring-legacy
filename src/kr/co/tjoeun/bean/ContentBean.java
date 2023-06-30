@@ -1,5 +1,7 @@
 package kr.co.tjoeun.bean;
 
+
+
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.web.multipart.MultipartFile;

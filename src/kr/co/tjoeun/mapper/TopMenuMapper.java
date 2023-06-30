@@ -10,6 +10,5 @@ import kr.co.tjoeun.bean.BoardInfoBean;
 public interface TopMenuMapper {
 	
 	@Select("select * from board_info_table order by board_info_idx")
-	
 	List<BoardInfoBean> getTopMenuList();
 }

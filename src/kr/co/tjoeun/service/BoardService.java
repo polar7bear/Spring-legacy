@@ -115,6 +115,10 @@ public class BoardService {
 		
 		PageBean pageBean = new PageBean(contentCnt, currentPage, pageListcnt, pagiNationcnt);
 		return pageBean;
-
+	}
+	
+	// 메인화면 게시판별 미리보기 조회
+	public ArrayList<ContentBean> getContentPreview(int content_board_idx) {
+		return boardDAO.getContentPreview(content_board_idx);
 	}
 }

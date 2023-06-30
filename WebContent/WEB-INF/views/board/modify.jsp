@@ -42,11 +42,12 @@
 							<div class="form-group">
 								<form:label path="content_subject">제목</form:label> 
 								<form:input path="content_subject" class="form-control" />
-								<form:errors path="content_subject" style="color:red;" />
+								<form:errors path="content_subject" style="color:red" />
 							</div>
 							<div class="form-group">
 								<form:label path="content_text">내용</form:label>
 								<form:textarea path="content_text" class="form-control" rows="10" style="resize: none" />
+								<form:errors path="content_text" style="color:red" />
 							</div>
 							<div class="form-group">
 								<form:label path="upload_file">첨부 이미지</form:label> 
